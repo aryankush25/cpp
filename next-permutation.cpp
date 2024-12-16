@@ -1,18 +1,16 @@
 #include <iostream>
-// #include <vector>
-// #include <algorithm>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
-    vector<vector<int>> findAllPermutations(vector<int> nums, vector<int> fixedNums = {}) {
-        vector<vector<int>> permutations = {};
+    vector<vector<int> > findAllPermutations(vector<int> nums, vector<int> fixedNums = vector<int>()) {
+        vector<vector<int> > permutations;
 
         if (nums.size() == 1) {
             fixedNums.push_back(nums[0]);
-
             permutations.push_back(fixedNums);
-
             return permutations;
         }
 
@@ -23,7 +21,7 @@ public:
             vector<int> ns = nums;
             ns.erase(ns.begin() + i);
 
-            vector<vector<int>> permus = findAllPermutations(ns, fns);
+            vector<vector<int> > permus = findAllPermutations(ns, fns);
 
             for (int j = 0; j < permus.size(); j++) {
                 permutations.push_back(permus[j]);
@@ -37,7 +35,7 @@ public:
         vector<int> sortedNums = nums;
         sort(sortedNums.begin(), sortedNums.end());
 
-        vector<vector<int>> allPermutations =  findAllPermutations(sortedNums);
+        vector<vector<int> > allPermutations = findAllPermutations(sortedNums);
 
         int index;
 
@@ -63,3 +61,45 @@ public:
         }
     }
 };
+
+int main() {
+    Solution solution;
+
+    // Test case 1: [1,2,3]
+    int arr1[] = {1, 2, 3};
+    vector<int> nums1(arr1, arr1 + sizeof(arr1)/sizeof(arr1[0]));
+    cout << "Original: [1,2,3]" << endl;
+    solution.nextPermutation(nums1);
+    cout << "Next permutation: [";
+    for (int i = 0; i < nums1.size(); i++) {
+        cout << nums1[i];
+        if (i < nums1.size() - 1) cout << ",";
+    }
+    cout << "]" << endl << endl;
+
+    // Test case 2: [3,2,1]
+    int arr2[] = {3, 2, 1};
+    vector<int> nums2(arr2, arr2 + sizeof(arr2)/sizeof(arr2[0]));
+    cout << "Original: [3,2,1]" << endl;
+    solution.nextPermutation(nums2);
+    cout << "Next permutation: [";
+    for (int i = 0; i < nums2.size(); i++) {
+        cout << nums2[i];
+        if (i < nums2.size() - 1) cout << ",";
+    }
+    cout << "]" << endl << endl;
+
+    // Test case 3: [1,1,5]
+    int arr3[] = {1, 1, 5};
+    vector<int> nums3(arr3, arr3 + sizeof(arr3)/sizeof(arr3[0]));
+    cout << "Original: [1,1,5]" << endl;
+    solution.nextPermutation(nums3);
+    cout << "Next permutation: [";
+    for (int i = 0; i < nums3.size(); i++) {
+        cout << nums3[i];
+        if (i < nums3.size() - 1) cout << ",";
+    }
+    cout << "]" << endl;
+
+    return 0;
+}
